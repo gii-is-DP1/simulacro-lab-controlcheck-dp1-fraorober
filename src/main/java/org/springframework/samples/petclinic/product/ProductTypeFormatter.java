@@ -9,24 +9,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductTypeFormatter implements Formatter<ProductType>{
-	
+
 	@Autowired
 	private ProductService productServ;
+	
+	
+	@Override	//mostrar
+	public String print(ProductType object, Locale locale) {
+		String name = object.name;
+		return name;
+	}
 
-    @Override
-    public String print(ProductType object, Locale locale) {
-        String nombre = object.name;
-        return nombre;
-    }
-
-    @Override
-    public ProductType parse(String text, Locale locale) throws ParseException {
-        ProductType ptype = productServ.getProductType(text);
-        if(ptype == null) {
-        	throw new ParseException(text, 0);
-        }else {
-            return ptype;
-        }
-    }
+	@Override
+	public ProductType parse(String text, Locale locale) throws ParseException {
+		ProductType productType = productServ.getProductType(text);
+		if(productType == null) {
+			throw new ParseException(text, 0);
+		}else {
+			return productType;
+		}
+	}
+	
     
 }

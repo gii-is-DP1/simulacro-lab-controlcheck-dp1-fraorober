@@ -7,19 +7,20 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="owners">
-  
+    <h2>
+        <c:if test="${product['new']}">New </c:if> Product
+    </h2>
     <form:form modelAttribute="product" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Name" name="name"/>
-            <petclinic:inputField label="price" name="price"/>
-            <petclinic:selectField name="productType" label="productType" names="${tipos}" size="3"/>
+            <petclinic:inputField label="Price" name="price"/>
+            <petclinic:selectField name="productType" label="Product Type" names="${tipos}" size="2"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${product['new']}">
-                 
-                        <button class="btn btn-default" type="submit">Guardar Producto</button>
+                        <button class="btn btn-default" type="submit">Add Product</button>
                     </c:when>
                 </c:choose>
             </div>

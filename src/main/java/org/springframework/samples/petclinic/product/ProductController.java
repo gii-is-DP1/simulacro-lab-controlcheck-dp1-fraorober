@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.product;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -14,35 +15,38 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping(value="/product")
 public class ProductController {
 	
 	@Autowired
 	private ProductService productServ;
 	
-	@GetMapping(value = "/create")
-	public String initCreationForm(ModelMap model) {
+	@GetMapping(value="/create")
+	private String initFormCreate(ModelMap model) {
 		String vista = "products/createOrUpdateProductForm";
+		List<ProductType> tipos = productServ.getAllProductTypes();
 		Product product = new Product();
-		model.put("product", product);
-		model.put("tipos", productServ.getAllProductTypes());
+		model.addAttribute("product", product);
+		model.addAttribute("tipos", tipos);
 		return vista;
 	}
 	
-	@PostMapping(value = "/create")
-	public String processCreationForm(@Valid Product product, BindingResult result, ModelMap model) {
+	@PostMapping(value="/create")
+	private String saveProduct(@Valid Product product, BindingResult result, ModelMap model) {
 		String vista = "products/createOrUpdateProductForm";
-		if (result.hasErrors()) {
-			model.put("product", product);
-			model.put("tipos", productServ.getAllProductTypes());
+		List<ProductType> tipos = productServ.getAllProductTypes();
+
+		if(result.hasErrors()) {
+			model.addAttribute("tipos", tipos);
+			model.addAttribute("product", product);
 			return vista;
-		}
-		else {
-			//creating owner, user and authorities
-			this.productServ.save(product);
-			model.put("message", "Guardado satisfactoriamente.");
+		}else{
+			productServ.save(product);
+			model.addAttribute("message", "Producto guardado correctamente.");
 			return "welcome";
 		}
+		
 	}
+	
     
 }

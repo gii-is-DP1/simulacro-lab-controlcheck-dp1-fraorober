@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.product;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,27 +9,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
 	
+	private ProductRepository repo;
+	
 	@Autowired
-	private ProductRepository productRep;
+	private ProductService(ProductRepository repo) {
+		this.repo = repo;
+	}
 	
     public List<Product> getAllProducts(){
-        return productRep.findAll();
+        return repo.findAll();
     }
 
     public List<Product> getProductsCheaperThan(double price) {
-        return productRep.findByPriceLessThan(price);
+        return repo.findByPriceLessThan(price);
     }
 
     public ProductType getProductType(String typeName) {
-        return productRep.findProductTypeByName(typeName);
+        return repo.findProductTypeByName(typeName);
     }
     
     public List<ProductType> getAllProductTypes(){
-    	return productRep.findAllProductTypes();
+        return repo.findAllProductTypes();
     }
 
     public Product save(Product p){
-        return productRep.save(p);       
+        return repo.save(p);
     }
 
     

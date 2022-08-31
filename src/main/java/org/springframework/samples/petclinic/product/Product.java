@@ -17,19 +17,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Product extends BaseEntity {
+public class Product extends BaseEntity{
 	
-	@Size(min=3, max=50)
+	//Integer id;
+	
 	@NotNull
+	@Size(min=3, max=50)
     String name;
 	
-	@Min(0)
 	@NotNull
+	@Min(0)
     double price;
 	
-	@ManyToOne
-	@NotNull
+	@ManyToOne(optional=true)
 	@JoinColumn(name="product_type_id")
+	@NotNull
 	ProductType productType;
 	
 }

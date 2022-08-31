@@ -14,11 +14,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="product_type")
-public class ProductType extends BaseEntity {
+public class ProductType extends BaseEntity{
 	
-	@Size(min=3, max=50)
+	//Integer id;
+	
 	@NotNull
-	@Column(name = "name", unique = true)
+	@Size(min=3, max=50)
+	@Column(unique=true)
     String name;
 }
